@@ -6,12 +6,6 @@ class Filme {
   }
 }
 
-let filmes = [
-  new Filme('O Poderoso Chefão', 'Francis Ford Coppola', 1972),
-  new Filme('Vingadores: Ultimato', 'Joe Russo, Anthony Russo', 2019),
-  new Filme('Intocáveis', 'Eric Toledano, Olivier Nakache', 2012)
-]
-
 function getAll() {
   return filmes;
 }
