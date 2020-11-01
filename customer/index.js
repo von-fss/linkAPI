@@ -26,7 +26,7 @@ const customer = require('./models/customer')
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
-// GET all filmes
+// GET all customer
 app.get('/customer', function (req, res) {
     customer.find().then(
         (customer) => res.send(customer)
@@ -35,7 +35,15 @@ app.get('/customer', function (req, res) {
     );
 });
 
-// POST filme
+// GET one customer
+app.get('/customer/:customerId', function (req, res) {
+    const customerId = req.params.customerId;
+    customer.findById(customerId)
+         .then((customer) => res.send(customer))
+         .catch(() => res.sendStatus(400));
+});
+
+// POST customer
 app.post('/customer', function (req, res) {
     const data = req.body
     if(!data) {
@@ -45,6 +53,28 @@ app.post('/customer', function (req, res) {
         .then(() => res.sendStatus(201))
         .catch(() => res.sendStatus(400))
 });
+
+// Update customer
+app.put('/customer/:customerId', function (req, res) {
+    const customerId = req.params.customerId;
+    const data = req.body;
+    if(!data || !customerId) {
+        res.sendStatus(400)
+    }
+    
+    customer.findByIdAndUpdate(customerId, data)
+         .then(() => res.sendStatus(200))
+         .catch(() => res.sendStatus(400));
+});
+
+// DELETE customer
+app.delete('/customer/:customerId', function (req, res) {
+    const customerId = req.params.customerId;
+    customer.findByIdAndRemove(customerId)
+         .then(() => res.sendStatus(200))
+         .catch(() => res.sendStatus(400));
+});
+
 
 // Subindo Server
 app.listen(8080, () => {
